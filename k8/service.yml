@@ -1,16 +1,13 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: v1
+kind: Service
 metadata:
-  name: ingress-wildcard-host
+  name: react-app-service
+  namespace: production
 spec:
-  rules:
-  - host: "foo.bar.com"
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/bar"
-        backend:
-          service:
-            name: service1
-            port:
-              number: 80
+  selector:
+    app: react-app
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 80
+  type: NodePort
